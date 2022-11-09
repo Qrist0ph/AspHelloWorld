@@ -84,6 +84,11 @@ systemctl daemon-reload && systemctl restart locator.service && systemctl status
 ```
 mkdir  ~/apps && mkdir  ~/apps/asphelloworld/
 ```
+# Copy src code from dev machine
+```
+WinSCP.com /ini=nul /script=D:\repos\github\AspHelloWorld\copysrc.txt
+```
+See WinSCP [Script](https://github.com/Qrist0ph/AspHelloWorld/blob/main/copysrc.txt).
 # Building the app
 
 
