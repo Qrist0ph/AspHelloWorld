@@ -63,8 +63,8 @@ sudo nano /etc/systemd/system/asphelloworld.service
 Description=AspHelloWorld
  
 [Service]
-WorkingDirectory=/root/locator
-ExecStart=/home/pi/dotnet/dotnet /home/pi/apps/asphelloworld AspHelloWorldSln.dll
+WorkingDirectory=/home/pi/apps/asphelloworld
+ExecStart=/home/pi/dotnet/dotnet /home/pi/apps/asphelloworld/AspHelloWorldSln.dll
 Restart=always
 RestartSec=10
 SyslogIdentifier=AF
@@ -77,7 +77,7 @@ WantedBy=multi-user.target
 ```
 **Restarting the Service**
 ```
-systemctl daemon-reload && systemctl restart locator.service && systemctl status locator.service
+sudo systemctl daemon-reload && sudo systemctl enable asphelloworld.service && sudo systemctl restart asphelloworld.service && sudo systemctl status asphelloworld.service
 ```
 
 ## Other initial tasks
