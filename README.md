@@ -3,12 +3,12 @@ Asp Test app for deployment and build testing
 
 # Setting up the machine
 ## Preparing nginx
-Setup nginx
+### Option 1: As nginx default site
 ```
 sudo nano /etc/nginx/sites-available/default
 ```
 
-Paste
+**Paste**
 ```
 server {
          location /  {
@@ -23,18 +23,41 @@ server {
 
 ```
 
-Restart nginx
+**Restart nginx**
 ```
 sudo systemctl restart nginx
 ```
 
+### Option 2: As different site
+```
+sudo nano /etc/nginx/sites-available/asphelloworld.yaico.de
+```
+**Paste**
+```
+server {
 
+        server_name asphelloworld.yaico.de;
+        location /  {
+                        proxy_set_header Host            $host;
+                        proxy_set_header  X-Real-IP          $remote_addr;
+                        proxy_set_header  X-Forwarded-For    $proxy_add_x_forwarded_for;
+                        proxy_pass http://localhost:5000;
+                        proxy_http_version 1.1;
+                        proxy_set_header Connection "";
+                }
+}
+
+```
+**Restart nginx**
+```
+sudo systemctl restart nginx
+```
 ## Setting up the Service
 ```
 sudo nano /etc/systemd/system/asphelloworld.service
 ```
 
-Paste
+**Paste**
 ```
 [Unit]
 Description=AspHelloWorld
@@ -52,21 +75,22 @@ Environment=ASPNETCORE_ENVIRONMENT=Production
 WantedBy=multi-user.target
 
 ```
-Restarting the Service
+**Restarting the Service**
 ```
 systemctl daemon-reload && systemctl restart locator.service && systemctl status locator.service
 ```
 
-# Building the app
-Very first time
+## Other initial tasks
 ```
 mkdir  ~/apps && mkdir  ~/apps/asphelloworld/
 ```
+# Building the app
 
-Build
+
+**Build**
 ```
 cd ~/src/AspHelloWorldSln/AspHelloWorldSln
-~/dotnet/dotnet  restore && ~/dotnet/dotnet  publish
+~/dotnet/dotnet restore && ~/dotnet/dotnet publish
 rsync -mirror ~/src/AspHelloWorldSln/AspHelloWorldSln/bin/Debug/netcoreapp3.1/publish/ ~/apps/asphelloworld/
 ```
 ## manual start
