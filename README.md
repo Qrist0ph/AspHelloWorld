@@ -1,6 +1,7 @@
 # AspHelloWorld
 Asp Test app for deployment and build testing
 
+# Setting up the machine
 ## Preparing nginx
 Setup nginx
 ```
@@ -21,12 +22,42 @@ server {
 }
 
 ```
+
 Restart nginx
 ```
 sudo systemctl restart nginx
 ```
 
-## Building the app
+
+## Setting up the Service
+```
+sudo nano /etc/systemd/system/asphelloworld.service
+```
+
+Paste
+```
+[Unit]
+Description=AspHelloWorld
+ 
+[Service]
+WorkingDirectory=/root/locator
+ExecStart=/home/pi/dotnet/dotnet /home/pi/apps/asphelloworld AspHelloWorldSln.dll
+Restart=always
+RestartSec=10
+SyslogIdentifier=AF
+User=root
+Environment=ASPNETCORE_ENVIRONMENT=Production
+ 
+[Install]
+WantedBy=multi-user.target
+
+```
+Restarting the Service
+```
+systemctl daemon-reload && systemctl restart locator.service && systemctl status locator.service
+```
+
+# Building the app
 Very first time
 ```
 mkdir  ~/apps && mkdir  ~/apps/asphelloworld/
