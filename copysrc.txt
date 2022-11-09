@@ -1,0 +1,6 @@
+#WinSCP.com /ini=nul /script=D:\repos\github\AspHelloWorld\copysrc.txt
+open sftp://pi@192.168.17.211  -hostkey="ssh-ed25519 255 fTcVOH90ebQ251Dg09NbwPQEMwOnvvtm0+aJ8PyBUNI="
+# Upload files, overwrites & recursive
+put D:\repos\github\AspHelloWorld\AspHelloWorldSln /home/pi/src/
+# Exit WinSCP
+exit
